@@ -106,7 +106,8 @@ class Jogo:
 
             case _:
                 print('Voce nao escolheu nenhuma opcao valida!\n')
-
+                
+        self.jogadores = []
         self.novoJogo()
 
 jogo = Jogo()
