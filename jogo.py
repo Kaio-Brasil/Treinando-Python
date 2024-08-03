@@ -10,19 +10,19 @@ class Jogo:
         self.palpites = 0
         self.jogadores = []
 
-    def verificarQuantidade(self, quant):
-        if self.quantidadePartidas > quant:
-            return False
-        return True
+    def verificarQuantidadeDefinida(self, quant, min, max):
+        if quant >= min and quant <= max:
+            return True
+        return False
     
     def verificarPadrao(self, numero):
         pattern = re.compile('[0-9]')
         
         if re.search(pattern, numero):
             return numero
-        return '-1'
+        return '0'
     
-    def somaPalpites(self, resultado):
+    def somarPalpites(self, resultado):
         self.palpites = self.palpites + resultado
 
     def verificarVencedor(self):
@@ -31,16 +31,21 @@ class Jogo:
     
         for i in range(len(self.jogadores) - 1):
             for j in range(self.quantidadePartidas):
-                if copia[i].pontuacao > copia[i+1].pontuacao:
+                if copia[i].palpite > copia[i+1].palpite:
+                    vencedor = copia[i+1].nome
+                elif copia[i].palpite < copia[i+1].palpite:
                     vencedor = copia[i].nome
                 else:
-                    vencedor = copia[i+1].nome
-
-        print('Jogador {} foi o venceu!'.format(vencedor))
+                    vencedor = 'Empate'
+        
+        if not vencedor.__eq__('Empate'):
+            print('Com menos palpite o jogador {} foi o venceu!\n'.format(vencedor.upper()))
+        else:
+            print('O jogo foi empatado!')
 
     def resultadoDosJogadores(self):
         for ver in self.jogadores:
-            print('Nome: {}, pontuacao: {}'.format(ver.nome, ver.pontuacao))
+            print('Nome: {}, palpite: {}'.format(ver.nome, ver.palpite))
     
     def criarJogadores(self):
         for n in range(self.quantidadeJogadores):
@@ -49,17 +54,21 @@ class Jogo:
             self.jogadores.append(jogador)
 
     def iniciarCompeticao(self):
-        vezes = 0
 
         for jogadorDaVez in self.jogadores:
+            vezes = 0
+            self.palpites = 0
+            
+            print('\nO jogador da vez: {}'.format(jogadorDaVez.nome))
+
             while vezes < self.quantidadePartidas:
                 self.jogo.jogar()
-                self.somaPalpites(self.jogo.getPaltipe())
-                jogadorDaVez.pontuacao = self.palpites
+                self.somarPalpites(self.jogo.getPaltipe())
+                jogadorDaVez.palpite = self.palpites
                 vezes = vezes + 1
 
     def novoJogo(self):
-        queroJogar = input('Deseja jogar novamente? S/N\n')
+        queroJogar = input('\nDeseja jogar novamente? S/N\n')
 
         if queroJogar.lower() == 's':
             self.iniciar()
@@ -78,26 +87,26 @@ class Jogo:
                 resposta = input('Digite a quantidade de jogadores? (2 ate 5)\n')
                 self.quantidadeJogadores = int(self.verificarPadrao(resposta))
 
-                if self.verificarQuantidade(self.quantidadeJogadores):
+                if self.verificarQuantidadeDefinida(self.quantidadeJogadores, 2, 5):
                     self.criarJogadores()
                 else:
                     print('Valor digitado invalido!')
                     print('Deve ser um numero e esta entre 2 e 5!')
-                    self.iniciar()
+                    self.novoJogo()
 
                 partidas = input('Digite a quantidade de partidas que vai jogar? (1 ate 9)\n')
                 self.quantidadePartidas = int(self.verificarPadrao(partidas))
             
-                if self.verificarQuantidade(9):
+                if self.verificarQuantidadeDefinida(self.quantidadePartidas, 1, 9):
                     self.iniciarCompeticao()
                     self.verificarVencedor()
+                    self.resultadoDosJogadores()
                 else:
                     print('Numero de partidas nao atende aos requisitos!')
 
             case _:
                 print('Voce nao escolheu nenhuma opcao valida!\n')
 
-        self.resultadoDosJogadores()
         self.novoJogo()
 
 jogo = Jogo()

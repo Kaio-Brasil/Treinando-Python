@@ -1,7 +1,7 @@
 class Player:
-    def __init__(self, nome, pontuacao):
+    def __init__(self, nome, palpite):
         self.nome = nome
-        self.pontuacao = pontuacao
+        self.palpite = palpite
 
-    def getPontuacao(self):
-        return self.pontuacao
+    def getPalpite(self):
+        return self.palpite

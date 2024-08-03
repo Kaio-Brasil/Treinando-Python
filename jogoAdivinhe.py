@@ -31,5 +31,5 @@ class JogoAdivinhe:
             elif self.palpite > self.valorAleatorio:
                 self.palpite = int(input('Chute um numero menor!\n'))
             elif self.palpite == self.valorAleatorio:
-                print('Voce acertou, parabens!!!\nQuantidade de palpites '+str(self.quantPalpite))
+                print('Voce acertou, parabens!!!\nQuantidade de palpites '+str(self.quantPalpite)+'\n')
                 return self.quantPalpite
