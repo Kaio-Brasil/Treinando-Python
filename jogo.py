@@ -1,4 +1,4 @@
-import jogoAdivinhe
+import jogoAdivinhe as ad
 import player
 import re
 
@@ -76,7 +76,7 @@ class Jogo:
             print('Ate logo!')
 
     def iniciar(self):
-        self.jogo = jogoAdivinhe.JogoAdivinhe()
+        self.jogo = ad.JogoAdivinhe()
         jogar = input('Digite 1 para jogar sozinho ou 2 para jogar com adversario(s)?\n')
         opcoes = self.verificarPadrao(jogar)
 

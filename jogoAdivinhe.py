@@ -1,10 +1,18 @@
 from random import randint
+from re import compile, search
 
 class JogoAdivinhe:
     def __init__(self):
         self.valorAleatorio = 0
         self.palpite = 0
         self.quantPalpite = 0
+
+    def verificarPadrao(self, numero):
+        pattern = compile('[0-9]')
+        
+        if search(pattern, numero):
+            return numero
+        return '0'
 
     def getPaltipe(self):
         return self.quantPalpite
@@ -21,7 +29,12 @@ class JogoAdivinhe:
     def jogar(self):
         self.zerarQuantidadePaltipe()
         self.valorAleatorio = self.gerarNumeroAleatorio()
-        self.palpite = int(input('Diga seu palpite entre 1 a 10?\n'))
+        numero = input('Diga seu palpite entre 1 a 10?\n')
+        self.palpite = int(self.verificarPadrao(numero))
+
+        if self.palpite == 0:
+            print('Valor digitado invalido!')
+            self.jogar()
 
         while True:
             self.contarPalpite()
