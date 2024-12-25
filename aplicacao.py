@@ -16,7 +16,7 @@ class Aplicacao(TelaDoGame, TelaModoDoisPlayer, ScreenDisplay):
         self.raiz.mainloop()
 
     def tela(self):
-        dimencoes = self.dimencoesDeTela(self.raiz.winfo_screenwidth, self.raiz.winfo_screenheight) #Chamada da class screenDisplay
+        dimencoes = self.dimencoesDaTelaPrincipal(self.raiz.winfo_screenwidth, self.raiz.winfo_screenheight) #Chamada da class screenDisplay
         self.raiz.geometry('%dx%d+%d+%d'%(dimencoes[0], dimencoes[1], dimencoes[2], dimencoes[3]))
         self.raiz.title('App Adivinha')
         self.raiz.config(bg='#808080')
@@ -36,10 +36,19 @@ class Aplicacao(TelaDoGame, TelaModoDoisPlayer, ScreenDisplay):
         else:
             self.telaPlayer1()
 
-    def frameDaTelaPrincipal(self):
-        self.framePrincipal = tk.Frame(self.raiz, bd=2, bg='#dcdcdc', highlightbackground='#ffffff', 
-                 highlightthickness=2)
-        self.framePrincipal.place(relx=0.03, rely=0.05, relwidth=0.94, relheight=0.9)
+    def frameDaTelaPrincipal(self, 
+                            bd: int = 2,
+                            background: str = '#dcdcdc', 
+                            hbackground: str ='#ffffff', 
+                            hthickness: int = 2,
+                            x: float = 0.03,
+                            y: float = 0.05,
+                            width: float = 0.94,
+                            height: float = 0.9):
+        
+        self.framePrincipal = tk.Frame(self.raiz, bd=bd, bg=background, highlightbackground=hbackground, 
+                            highlightthickness=hthickness)
+        self.framePrincipal.place(relx=x, rely=y, relwidth=width, relheight=height)
 
     def conteudoDoFrameDaTelaPrincipal(self):
         self.modoJogo = tk.BooleanVar()
